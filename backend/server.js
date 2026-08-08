@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
+import pool from "./config/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
 
@@ -35,7 +36,7 @@ app.get("/", (req, res) => {
 
 app.get("/db-test", async (req, res) => {
   try {
-    const [result] = await db.query("SELECT 1 AS connected");
+    const [result] = await pool.query("SELECT 1 AS connected");
 
     res.json({
       success: true,
