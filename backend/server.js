@@ -33,6 +33,26 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/db-test", async (req, res) => {
+  try {
+    const [result] = await db.query("SELECT 1 AS connected");
+
+    res.json({
+      success: true,
+      database: "Connected",
+      result,
+    });
+  } catch (error) {
+    console.error("Database connection failed:", error);
+
+    res.status(500).json({
+      success: false,
+      database: "Not connected",
+      error: error.message,
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
